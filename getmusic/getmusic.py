@@ -23,9 +23,7 @@ def getRawMusic(id,folder_name,name):
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
     fpath = os.path.join(folder_name, '%s.mp3' % name)
-    if  os.path.exists(fpath):
-        print('song exist!')
-    else:
+    if  not os.path.exists(fpath):
         r = requests.get(url, headers=headers).content
         f = open(fpath,'wb')
         f.write(r)
@@ -48,7 +46,6 @@ def getRM(id):
     r = requests.get(url, headers=headers).content
     try:
         data = json.loads(r)
-        print(data)
         music_data = data['result']
         folder_name = music_data['name']
         music_list = music_data['tracks']
@@ -62,5 +59,3 @@ def getRM(id):
 if __name__ == '__main__':
     id = input('Please input songList id:')
     getRM(id)
-
-
